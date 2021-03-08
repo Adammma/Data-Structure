@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace ::std;
+#define MAXSIZE 50
+typedef struct {
+	int data[MAXSIZE] = { 2,5,3,6,4,7,9,1,8 };
+	int length = 9;
+}SqList;
+int DeleteMin(SqList &L) {
+	if (L.length == 0) {
+		printf("顺序表为空");
+		return 9999;
+	}
+	else {
+		int l = 0; //储存下标
+		int e = L.data[0]; //储存最小值
+		for (int i = 0; i < L.length; i++) {
+			e = (e < L.data[i] ? e : L.data[i]);
+			l = (e < L.data[i] ? l : i);
+		}
+		L.data[l] = L.data[L.length - 1];
+		printf("最小的元素是第%d个，它的值是%d", l+1, e);	
+		getchar();
+		return e;
+	}
+}
+int main() {
+	SqList L;
+	DeleteMin(L);
+	return 0;
+}
