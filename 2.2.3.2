@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+#define MAXSIZE 20
+//无错误处理
+void swap(int &a, int &b) {
+	int temp;
+	temp = a;
+	a = b;
+	b = temp;
+}
+typedef struct {
+	int data[MAXSIZE] = { 2,5,3,6,4,7,9,1,8 };
+	int length = 9;
+}SqList;
+void Reverse(SqList &L) {
+	for (int i = 0; i <= L.length / 2; i++) {
+		swap(L.data[i], L.data[L.length - i-1]);  //这里一开始写成了length-i
+	}
+}
+int main() {
+	SqList L;
+	cout << "Before" << endl;
+	for (int i = 0; i < L.length; i++) {
+		cout << L.data[i] ;
+	}
+	Reverse(L);
+	cout << "\n" << endl;
+	cout << "After" << endl;
+	for (int j = 0; j < L.length; j++) {
+		cout << L.data[j] ;
+	}
+	getchar();
+}
