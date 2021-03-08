@@ -1,0 +1,43 @@
+#include <iostream>
+#define MAXSIZE 20
+using namespace std;
+
+typedef struct {
+	int data[MAXSIZE] = { 3,4,5,6,7,8,9,10,11 };
+	int length = 9;
+}SqList;
+void DeleteSection(SqList &L, int s, int t) {
+	int k = 0;//记录处于s-t区间内的元素个数
+	if (((L.data[0] > t||L.data[L.length] < s)&&L.data[0] < L.data[L.length]) || ((L.data[0] <s||L.data[L.length] > t)&&L.data[0] > L.data[L.length])) {//这个地方有bug，回头再说
+		cout << "超出范围" << endl;
+	}
+	else if (L.length == 0) {
+		cout << "顺序表为空" << endl;
+	}
+	else if (s > t) 
+		cout << "Error" << endl;
+	else {
+		for (int i = 0; i < L.length; i++) {
+			if (L.data[i] >= s && L.data[i] <= t) {
+				k++;
+			}
+			else
+				L.data[i - k] = L.data[i];
+		}
+		L.length = L.length - k;
+	}
+}
+int main() {
+	SqList L;
+	cout << "Before" << endl;
+	for (int i = 0; i < L.length; i++) {
+		cout << L.data[i]<<" ";
+	}
+	cout << endl;	
+	DeleteSection(L, 0, 2);
+	cout << "After" << endl;
+	for (int j = 0; j < L.length; j++) {
+		cout << L.data[j]<<" ";
+	}
+	getchar();
+}
