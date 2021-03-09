@@ -1,0 +1,33 @@
+#include <iostream>
+#define MAXSIZE 20
+using namespace std;
+
+typedef struct {
+	int data[MAXSIZE] = { 2,5,3,6,4,7,9,1,8 };
+	int length = 9;
+}SqList;
+void Delete(SqList &L, int s, int t) {
+	int k = 0;		//记录在s和t之间的元素个数
+	if (s > t)
+		cout << "Error:s must smaller than t" << endl;
+	else if (L.length == 0)
+		cout << "Error:L do not exist";
+	else {
+		for (int i = 0; i < L.length; i++) {
+			if (L.data[i] >= s && L.data[i] <= t)
+				k++;
+			else L.data[i - k] = L.data[i];
+		}
+		L.length = L.length - k;
+	}
+}
+int main() {
+	SqList L;
+	Delete(L, 3, 6);
+	cout << "After" << endl;
+	for (int j = 0; j < L.length; j++) {
+		cout << L.data[j];
+	}
+	getchar();
+	return 0;
+}
