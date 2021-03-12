@@ -1,0 +1,52 @@
+#include <iostream>
+#define MAXSIZE 20
+using namespace std;
+//显然，使用折半查找。
+typedef struct {
+	int data[MAXSIZE] = { 3,4,6,7,8,9,10,11 };
+	int length = 8;
+}SqList;
+void swap(int &a, int &b) {
+	int temp;
+	temp = a;
+	a = b;
+	b = temp;
+}
+void Insert(SqList &L, int x,int pos) {
+	for (int i = L.length; i >= pos; i--) {
+		L.data[i + 1] = L.data[i];
+	}
+	L.data[pos] = x;
+}
+void Search(SqList &L, int x,int left,int right) {
+	int mid = (left + right) / 2;
+	if ((right-left)<=1) {
+		if (L.data[mid] < x)
+			Insert(L, x, mid + 1);
+		else if (L.data[mid] > x)
+			Insert(L, x, mid - 1);
+		L.length++;
+	}
+	else if (L.data[mid] > x) {
+		right = mid;
+		Search(L, x, left, right);
+	}
+	else if (L.data[mid] < x) {
+		left = mid;
+		Search(L, x, left, right);
+	}
+	else if (L.data[mid] == x)
+		swap(L.data[mid], L.data[mid + 1]);
+}
+int main() {
+	SqList L;
+	int left = 0;
+	int right = L.length;
+	cout << "After:" << endl;
+	Search(L, 5, left, right);
+	for (int i = 0; i < L.length; i++) {
+		cout << L.data[i] << " ";
+	}
+	return 0;
+}
+//如果最后一个元素与x相等，不存在与后继交换的操作，这里没写。
