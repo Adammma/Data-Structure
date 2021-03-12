@@ -1,0 +1,37 @@
+#include <iostream>
+#define MAXSIZE 20
+using namespace std;
+
+typedef struct {
+	int data[MAXSIZE] = { 2,5,3,6,4,7,9,1,8 };
+	int length = 9;
+}SqList;
+void swap(int &a, int &b) {
+	int temp;
+	temp = a;
+	a = b;
+	b = temp;
+}
+//笨方法：把前m个存到一个新的数组里
+void SwapSqList(SqList &A, int m) {
+	int temp[MAXSIZE] = {};
+	int n = A.length - m;
+	for (int i = 0; i < m; i++) {
+		temp[i] = A.data[i];
+	}
+	for (int j = 0; j < n; j++) {
+		A.data[j] = A.data[m + j ];
+	}
+	for (int k = 0; k < m; k++) {
+		A.data[n + k ] = temp[k];
+	}
+}
+int main() {
+	SqList A;
+	cout << "After" << endl;
+	SwapSqList(A, 4);
+	for (int i = 0; i < A.length; i++) {
+		cout << A.data[i] << " ";
+	}
+}
+//王道方法，定义Reverse函数，先将全部顺序表逆置，再分别逆置前n个和后m个。
