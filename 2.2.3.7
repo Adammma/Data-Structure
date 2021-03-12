@@ -1,0 +1,58 @@
+#include <iostream>
+#define MAXSIZE 20
+using namespace std;
+
+typedef struct {
+	int data[MAXSIZE] ;
+	int length ;
+}SqList;
+void Merge(SqList &L, SqList &O,SqList &F) {
+	F.length = L.length + O.length;
+	int l = 0;
+	int o = 0;			//指向两个顺序表第一个元素
+	for (int i = 0; i < F.length; i++) {
+		if (l > L.length - 1) {
+			F.data[i] = O.data[o];			//首先判断两个游标是否越界。若不判断，在数组初始化时未被初始化的部分系统会赋一个无穷小的值，导致判断错误。
+			o++;
+		}
+		else if (o > O.length - 1) {
+			F.data[i] = L.data[l];
+			l++;
+		}
+		else if (L.data[l] <= O.data[o]) {
+			F.data[i] = L.data[l];
+			l++;
+		}
+		
+
+		else {
+			F.data[i] = O.data[o];
+			o++;
+		}
+	}
+}
+int main() {
+	SqList L;
+	L.length = 5;
+	cout << "L,Before" << endl;
+	for (int i = 0; i < 5; i++) {
+		L.data[i] = 1 + 2*i;
+		cout << L.data[i] << " ";
+	}
+	cout << endl;
+	cout << "O,Before" << endl;
+	SqList O;
+	O.length = 5;
+	for (int i = 0; i < 5; i++) {
+		O.data[i] = 2*(i+1);
+		cout << O.data[i] << " ";
+	}
+	cout << endl;
+	SqList F;
+	Merge(L, O, F);
+	cout << "F,After" << endl;
+	for (int i = 0; i < F.length; i++) {
+		cout << F.data[i] << " ";
+	}
+	return 0;
+}
