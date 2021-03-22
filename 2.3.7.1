@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+
+typedef struct LNode {
+	int data;
+	struct LNode *next;
+	int length ;
+}LNode,*LinkList;
+LinkList List_TailInsert(LinkList &L) {
+	int x=0;
+	int length = 0;
+	L = (LinkList)malloc(sizeof(LNode));			
+	L->length = 0;	
+	cout << "请输入第" << L->length + 1 << "个节点的值" << endl;
+	cin >> x;
+	L->data = x;
+	L->length++;
+	LNode *s, *r = L;
+	while (x != 9999) {
+		cout << "请输入第" << L->length + 1 << "个节点的值" << endl;
+		cin >> x;
+		s = (LNode*)malloc(sizeof(LNode));
+		s->data = x;
+		r->next = s;
+		r = s;
+		L->length++;
+	}
+	r->next = NULL;
+	return L;
+}
+void Delete_x(LinkList &L,int x) {
+	LNode *p = L;
+	
+	 if (p != NULL && p->data == x && p->data!=9999) {
+		LNode *q = p->next;			//删除节点，实质是将其后继结点的值赋予其自身，在删除后继结点
+		p->data = p->next->data;
+		p->next = q->next;
+		free(q);
+		L->length--;
+		Delete_x(p, x);
+
+	}
+	else if (p != NULL && p->data != x && p->data!=9999) {
+		Delete_x(p->next, x);
+
+	}
+
+}
+int main() {
+	LinkList L;
+	List_TailInsert(L);
+	Delete_x(L, 3);
+	LNode *p = L;
+	cout << "After" << endl;
+	while(p!=NULL){			//干 这里结果一直都对，输出的地方我搞错了，不想弄了爬
+		cout << p->data << " ";
+		p = p->next;
+	}
+	getchar();
+}
