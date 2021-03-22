@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+typedef struct LNode {
+	int data;
+	struct LNode *next;
+	int length;
+}LNode, *LinkList;
+//这里插入有点问题，9999不应该被插入进去。
+LinkList List_TailInsert(LinkList &L) {
+	int x = 0;
+	int length = 0;
+	L = (LinkList)malloc(sizeof(LNode));
+	L->length = 0;
+	cout << "请输入第" << L->length + 1 << "个节点的值" << endl;
+	cin >> x;
+	L->data = x;
+	L->length++;
+	LNode *s, *r = L;
+	while (x != 9999) {
+		cout << "请输入第" << L->length + 1 << "个节点的值" << endl;
+		cin >> x;
+		s = (LNode*)malloc(sizeof(LNode));
+		s->data = x;
+		r->next = s;
+		r = s;
+		L->length++;
+	}
+	r->next = NULL;
+	return L;
+}
+//用递归的方法解决。更简单的可以用栈
+void PrintReverse(LinkList &L) {
+	LNode *p = L;
+	if (p->next != NULL)
+		PrintReverse(p->next);
+	if (p != NULL)
+		cout << p->data;
+}
+//这里由于是带头节点的单链表，所以需要去掉头节点
+int main() {
+	LinkList L;
+	List_TailInsert(L);
+	cout << "After" << endl;
+	if (L != NULL) {
+		PrintReverse(L->next);
+	}
+	getchar();
+}
